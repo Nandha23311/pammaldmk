@@ -9,7 +9,7 @@ exports.savePost=function(req,res){
 	var propic=profilepic.split("url=")		
 	var url=propic[2].split(", ")
 	delete reqBody.pic;
-	reqBody.pic=url;
+	reqBody.pic=url[0];
     var VattamObj=new Vattam(reqBody);
     VattamObj.save(function(errData,savedData){
         if (savedData != null)
