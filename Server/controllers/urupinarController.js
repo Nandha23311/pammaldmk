@@ -5,6 +5,11 @@ var HttpStatus = require('http-status');
 exports.savePost=function(req,res){
     console.log("Hitted ::"+req.url);
     var reqBody=req.body;
+    var profilepic=reqBody.pic;
+	var propic=profilepic.split("url=")		
+	var url=propic[2].split(", ")
+	delete reqBody.pic;
+	reqBody.pic=url;
     var VattamObj=new Vattam(reqBody);
     VattamObj.save(function(errData,savedData){
         if (savedData != null)
