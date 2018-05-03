@@ -8,7 +8,8 @@ var port = process.env.PORT || 9000;
 
 
 //var mongodbUri='mongodb://nanda:sensex@ds125588.mlab.com:25588/sensex'
-var mongodbUri='mongodb://localhost/mydmk';
+var mongodbUri='mongodb://haridmk:hari19031997@ds111370.mlab.com:11370/pammalldmk';
+//var mongodbUri='mongodb://localhost/mydmk';
 
 
 mongoose.connect(mongodbUri,options);
