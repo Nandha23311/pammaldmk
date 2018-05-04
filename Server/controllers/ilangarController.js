@@ -62,3 +62,95 @@ exports.findPost=function(req,res){
         }
     })
 }
+exports.deletePost=function(req,res){
+    console.log("Hitted ::"+req.url);
+        var reqBody=req.body;
+        var _id=reqBody._id;
+        console.log(_id)
+        Vattam.findByIdAndRemove(_id, function(err,data) {
+               if (data)
+                       {
+                           res.status(HttpStatus.OK).json({
+                           status: 'success',
+                           code: HttpStatus.OK
+                           });
+                           return;
+                       }
+                       else
+                       {
+                           console.log("Err"+err);
+                           res.status( HttpStatus.INTERNAL_SERVER_ERROR).json({
+                           status: 'failure',
+                           code:  HttpStatus.INTERNAL_SERVER_ERROR,
+                           error: 'Unexpected error accessing data'
+                           });
+                           return;
+                       }
+
+             });
+
+    }
+
+exports.updateUser=function(req,res){
+    console.log("Hitted ::"+req.url);
+    var reqBody=req.body;
+    console.log("ReqBody",reqBody);
+    var updateObj={};
+    if(reqBody.profilepic == "0" ){
+        var _id=reqBody._id;
+        var name=reqBody.name;
+        var posting=reqBody.posting;
+        var address=reqBody.address;
+        var mobno=reqBody.mobno;
+        updateObj.name=name;
+        updateObj.posting=posting;
+        updateObj.address=address;
+        updateObj.mobno=mobno;
+
+    }else{
+        var _id=reqBody._id;
+        var name=reqBody.name;
+        var posting=reqBody.posting;
+        var address=reqBody.address;
+        var mobno=reqBody.mobno;
+        var profilepic=reqBody.pic;
+        var propic=profilepic.split("url=")
+        var url=propic[2].split(", ")
+        updateObj.name=name;
+        updateObj.posting=posting;
+        updateObj.address=address;
+        updateObj.mobno=mobno;
+        updateObj.profilepic=url[0];
+    }
+    console.log("UpdatedObj",updateObj)
+    Vattam.findByIdAndUpdate(_id,updateObj,function(err,data){
+        if(err){
+            console.log(err);
+            res.status( HttpStatus.INTERNAL_SERVER_ERROR).json({
+                status: 'failure',
+                code:  HttpStatus.INTERNAL_SERVER_ERROR,
+                data: "",
+                error: 'Unexpected error accessing data'
+            });
+            return;
+        }
+        if (data !=null)
+        {
+            console.log(data)
+            res.status(HttpStatus.OK).json({
+                status: 'success',
+                code: HttpStatus.OK,
+                data:data
+            });
+            return;
+        }
+        else{
+            res.status(HttpStatus.NOT_FOUND).json({
+                status: 'failure',
+                code: HttpStatus.NOT_FOUND,
+                data:"User Not Found"
+            });
+            return;
+        }
+    })
+}
