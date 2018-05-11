@@ -95,7 +95,7 @@ exports.deletePost=function(req,res){
         var reqBody=req.body;
         console.log("ReqBody",reqBody);
         var updateObj={};
-        if(reqBody.profilepic == "0" ){
+        if(reqBody.pic == "0" ){
             var _id=reqBody._id;
             var name=reqBody.name;
             var posting=reqBody.posting;
